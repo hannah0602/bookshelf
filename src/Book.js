@@ -26,22 +26,20 @@ const Book = ({ book, onUpdateCategory, onSelect }) => {
       <button
         className="rounded-full w-16 hh-16 bg-blue-700 shadow-sm"
         onClick={showMenu}
-      ></button>
-      {menu === "true" && (
+      >
+        Select
+      </button>
+
+      {menu && (
         <form
-          w-20
-          h-14
-          bg-gray-400
-          rounded
+          className="w-20 h-14 bg-gray-400 rounded"
           method="post"
           onSubmit={handleSubmit}
         >
           <label>
             Move on to...
             <select
-              multiple={true}
               value={selectedCategory}
-              defaultValue={book.category}
               onChange={(e) => {
                 const options = [...e.target.selectedOptions];
                 const values = options.map((option) => option.value);
