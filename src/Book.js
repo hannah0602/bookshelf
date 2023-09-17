@@ -56,7 +56,7 @@ const Book = ({ book, onUpdateCategory, onSelect }) => {
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  onUpdateCategory: PropTypes.func.isRequired,
+  //onUpdateCategory: PropTypes.func.isRequired,
   //onSelect: PropTypes.func.isRequired,
 };
 
