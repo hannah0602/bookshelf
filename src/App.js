@@ -79,32 +79,26 @@ function App() {
       <h2>Selected Books in Search Page</h2>
       <BookShelf books={books} shelf={shelf} onSelect={selectBooks} />
 
-      {books.filter((book) => (book.category = "Currently Reading")) && (
-        <BookShelf
-          category="Currently Reading"
-          books={books}
-          shelf={shelf}
-          onUpdateCategory={updateBookShelf}
-        />
-      )}
+      <BookShelf
+        category="Currently Reading"
+        books={books}
+        shelf={shelf}
+        onUpdateCategory={updateBookShelf}
+      />
 
-      {books.filter((book) => (book.category = "Want to Read")) && (
-        <BookShelf
-          category="Want to Read"
-          books={books}
-          shelf={shelf}
-          onUpdateCategory={updateBookShelf}
-        />
-      )}
+      <BookShelf
+        category="Want To Read"
+        books={books}
+        shelf={shelf}
+        onUpdateCategory={updateBookShelf}
+      />
 
-      {books.filter((book) => (book.category = "Read")) && (
-        <BookShelf
-          category="Read"
-          books={books}
-          shelf={shelf}
-          onUpdateCategory={updateBookShelf}
-        />
-      )}
+      <BookShelf
+        category="Read"
+        books={books}
+        shelf={shelf}
+        onUpdateCategory={updateBookShelf}
+      />
     </div>
   );
 }
