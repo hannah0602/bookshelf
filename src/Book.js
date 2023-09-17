@@ -14,8 +14,14 @@ const Book = ({ book, onUpdateCategory, onSelect }) => {
     /*const form = e.target;
     const formData = new FormData(form);
     fetch('/some-api', { method: form.method, body: formData });*/
-    onUpdateCategory(selectedCategory);
-    onSelect(selectedCategory);
+
+    const options = [...e.target.selectedOptions];
+    const values = options.map((option) => option.value);
+  
+    const category = values[0];
+    book.category = category;
+    setSelectedCategory(values);
+    onUpdateCategory(book);
   }
 
   return (
@@ -31,20 +37,11 @@ const Book = ({ book, onUpdateCategory, onSelect }) => {
       </button>
 
       {menu && (
-        <form
-          className="w-20 h-14 bg-gray-400 rounded"
-          method="post"
-          onSubmit={handleSubmit}
-        >
           <label>
             Move on to...
             <select
               value={selectedCategory}
-              onChange={(e) => {
-                const options = [...e.target.selectedOptions];
-                const values = options.map((option) => option.value);
-                setSelectedCategory(values);
-              }}
+              onChange={handleSubmit}
             >
               <option value="Currently Reading">Currently Reading</option>
               <option value="Want To Read">Want To Read</option>
@@ -52,7 +49,6 @@ const Book = ({ book, onUpdateCategory, onSelect }) => {
               <option value="None">None</option>
             </select>
           </label>
-        </form>
       )}
     </div>
   );
