@@ -1,7 +1,7 @@
-import React from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import BookShelf from './BookShelf';
+import React from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import BookShelf from "./BookShelf";
 
 const books = [
   {
@@ -59,16 +59,16 @@ function App() {
 
   const updateBookShelf = (book) => {
     if (book.category === books.category) {
+      setShelf([...books, book]);
+    }
+    if (book.category !== books.category) {
+      setShelf(books.filter((b) => b.id !== book.id));
+    }
+  };
+
+  const selectBooks = (book) => {
     setShelf([...books, book]);
   };
-   if (book.category !== books.category){
-    setShelf(books.filter((b) => b.id !== book.id));
-  };
-};
-
-const selectBooks = (book) => {
-  setShelf([...books, book]);
-};
 
   return (
     <div className="w-full">
@@ -76,17 +76,35 @@ const selectBooks = (book) => {
         <h1 className="text-white">MyReads</h1>
       </header>
       <Link to="/search">Search</Link>
-    <h2>Selected Books in Search Page</h2>
-    <BookShelf shelf={shelf} onSelect={selectBooks} />
+      <h2>Selected Books in Search Page</h2>
+      <BookShelf books={books} shelf={shelf} onSelect={selectBooks} />
 
-    {books.filter((book) => (book.category="Currently Reading")) &&  
-    <BookShelf category="Currently Reading" books={books} shelf={shelf} onUpdateCategory={updateBookShelf} />}
+      {books.filter((book) => (book.category = "Currently Reading")) && (
+        <BookShelf
+          category="Currently Reading"
+          books={books}
+          shelf={shelf}
+          onUpdateCategory={updateBookShelf}
+        />
+      )}
 
-      {books.filter((book) => (book.category="Want to Read")) &&  
-      <BookShelf category="Want to Read" books={books} shelf={shelf} onUpdateCategory={updateBookShelf} />}
+      {books.filter((book) => (book.category = "Want to Read")) && (
+        <BookShelf
+          category="Want to Read"
+          books={books}
+          shelf={shelf}
+          onUpdateCategory={updateBookShelf}
+        />
+      )}
 
-      {books.filter((book) => (book.category="Read")) &&  
-      <BookShelf category="Read" books={books} shelf={shelf} onUpdateCategory={updateBookShelf} />}
+      {books.filter((book) => (book.category = "Read")) && (
+        <BookShelf
+          category="Read"
+          books={books}
+          shelf={shelf}
+          onUpdateCategory={updateBookShelf}
+        />
+      )}
     </div>
   );
 }
