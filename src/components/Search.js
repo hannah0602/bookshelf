@@ -22,7 +22,7 @@ const Search = ({ books, onSelect }) => {
     query === ""
       ? books
       : books.filter((book) =>
-          book.title.toLowerCase().includes(query.toLowerCase())
+          book.title.toLowerCase().includes(query.toLowerCase()) || book.author.toLowerCase().includes(query.toLowerCase())
         );
 
   return (
