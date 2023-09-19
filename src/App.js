@@ -56,6 +56,7 @@ const books = [
 
 function App() {
   const [shelf, setShelf] = useState([]);
+  const [select, setSelect] = useState([]);
 
   const updateBookShelf = (book) => {
     if (book.category === books.category) {
@@ -67,8 +68,9 @@ function App() {
   };
 
   const selectBooks = (book) => {
-    setShelf([...books, book]);
+    setSelect([...books, book]);
   };
+  
 
   return (
     <div className="w-full">
@@ -77,7 +79,8 @@ function App() {
       </header>
       <Link to="/search">Search</Link>
       <h2>Selected Books in Search Page</h2>
-      <BookShelf books={books} shelf={shelf} onSelect={selectBooks} />
+      <BookShelf books={books} select={select} onUpdateCategory={selectBooks} />
+      
 
       <BookShelf
         category="Currently Reading"
