@@ -1,6 +1,6 @@
 import Search from "../components/Search";
 
-export default function SearchPage() {
+export default function SearchPage () {
   const books = [
     {
       id: 1,
@@ -50,9 +50,23 @@ export default function SearchPage() {
       author: "Robert Kiyosaki",
       category: "None",
     },
+    {
+      id: 9,
+      title: "Courage to be disliked",
+      author: "Ichiro Kishimi and Fumitake Koga",
+      category: "None",
+    },
+    {
+      id: 10,
+      title: "Can't be hurt",
+      author: "David Goggins",
+      category: "None",
+    },
   ];
 
   return (
-    <Search books={books} />
-  );
+    <>
+    <Search books={books}  />
+
+  </>);
 }

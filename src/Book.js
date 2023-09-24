@@ -1,7 +1,19 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Book = ({ book, onUpdateCategory, onSelect }) => {
+
+ /* const Async = () => {
+    const [book, setBook] = useState([]);
+  
+    useEffect(() => {
+      fetch('https://reactnd-books-api.udacity.com/books/${bookId}')
+      .then((response) => response.json())
+      .then((data) => {
+      setBook(data)});
+      }, []); 
+    }*/
+
   const [menu, setMenu] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(book.category);
 

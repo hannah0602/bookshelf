@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import BookShelf from "./BookShelf";
 
+
 const books = [
   {
     id: 1,
@@ -52,11 +53,33 @@ const books = [
     author: "Robert Kiyosaki",
     category: "None",
   },
-];
+]; 
+
+/*const api = "https://reactnd-books-api.udacity.com";
+
+let token = localStorage.token;
+
+if (!token) token = localStorage.token = Math.random().toString(36).substr(-8);
+
+const headers = {
+  Accept: "application/json",
+  Authorization: token,
+};
+
+export const get = (bookId) =>
+  fetch(`${api}/books/${bookId}`, { headers })
+    .then((res) => res.json())
+    .then((data) => data.book);
+
+export const books = () =>
+  fetch(`${api}/books`, { headers })
+    .then((res) => res.json())
+    .then((data) => data.books); */
+
 
 function App() {
+
   const [shelf, setShelf] = useState([]);
-  const [select, setSelect] = useState([]);
 
   const updateBookShelf = (book) => {
     if (book.category === books.category) {
@@ -67,6 +90,8 @@ function App() {
     }
   };
 
+  const [select, setSelect] = useState([]);
+  
   const selectBooks = (book) => {
     setSelect([...books, book]);
   };
@@ -74,14 +99,16 @@ function App() {
 
   return (
     <div className="w-full">
+     {books.map((book) => {
+
+     })} 
       <header className="bg-green-600 w-full">
         <h1 className="text-white">MyReads</h1>
       </header>
       <Link to="/search">Search</Link>
-      <h2>Selected Books in Search Page</h2>
+      <h2>Newly Selected</h2>
       <BookShelf books={books} select={select} onUpdateCategory={selectBooks} />
-      
-
+    
       <BookShelf
         category="Currently Reading"
         books={books}
