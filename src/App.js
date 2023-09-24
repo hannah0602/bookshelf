@@ -1,59 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BookShelf from "./BookShelf";
-
-
-const books = [
-  {
-    id: 1,
-    title: "To kill a mockingbird",
-    author: "Harper Lee",
-    category: "Currently Reading",
-  },
-  {
-    id: 2,
-    title: "Deep Work",
-    author: "Cal Newport",
-    category: "Currently Reading",
-  },
-  {
-    id: 3,
-    title: "1776",
-    author: "David McCullough",
-    category: "Want To Read",
-  },
-  {
-    id: 4,
-    title: "Atomic Habits",
-    author: "James Clear",
-    category: "Want To Read",
-  },
-  {
-    id: 5,
-    title: "4 Hour Week",
-    author: "Tim Ferris",
-    category: "Read",
-  },
-  {
-    id: 6,
-    title: "12 Rules For Life",
-    author: "Jordan Peterson",
-    category: "Read",
-  },
-  {
-    id: 7,
-    title: "1984",
-    author: "George Orwell",
-    category: "None",
-  },
-  {
-    id: 8,
-    title: "Rich Dad Poor Dad",
-    author: "Robert Kiyosaki",
-    category: "None",
-  },
-]; 
 
 /*const api = "https://reactnd-books-api.udacity.com";
 
@@ -76,58 +24,84 @@ export const books = () =>
     .then((res) => res.json())
     .then((data) => data.books); */
 
-
 function App() {
 
-  const [shelf, setShelf] = useState([]);
+  const [shelf, setShelf] = useState({
+    books: []
+  });
+
+  useEffect(() => {
+    if (sessionStorage.getItem('bookshelf') == null) {
+      fetch("https://reactnd-books-api.udacity.com/books/", {
+        headers: {
+          'Authorization': 'hannah'
+        }
+      }).then((response) => response.json())
+        .then((data) => {
+          setShelf(data);
+          sessionStorage.setItem('bookshelf', JSON.stringify(data));
+        });
+    } else {
+      const data = JSON.parse(sessionStorage.getItem('bookshelf'));
+      setShelf(data);
+    }
+  }, []);
+
+  const reloadData = () => {
+    fetch("https://reactnd-books-api.udacity.com/books/", {
+      headers: {
+        'Authorization': 'hannah'
+      }
+    }).then((response) => response.json())
+      .then((data) => {
+        setShelf(data);
+        sessionStorage.setItem('bookshelf', JSON.stringify(data));
+      });
+  }
 
   const updateBookShelf = (book) => {
-    if (book.category === books.category) {
-      setShelf([...books, book]);
-    }
-    if (book.category !== books.category) {
-      setShelf(books.filter((b) => b.id !== book.id));
-    }
+    // if (book.category === shelf.category) {
+    //   setShelf([...shelf.books, book]);
+    // }
+    // if (book.category !== shelf.category) {
+    //   setShelf(shelf.filter((b) => b.id !== book.id));
+    // }
   };
-
-  const [select, setSelect] = useState([]);
-  
-  const selectBooks = (book) => {
-    setSelect([...books, book]);
-  };
-  
 
   return (
     <div className="w-full">
-     {books.map((book) => {
-
-     })} 
-      <header className="bg-green-600 w-full">
+      <header className="w-full">
         <h1 className="text-white">MyReads</h1>
       </header>
-      <Link to="/search">Search</Link>
-      <h2>Newly Selected</h2>
-      <BookShelf books={books} select={select} onUpdateCategory={selectBooks} />
-    
+      <div>
+        <button onClick={reloadData}>Reload data</button>        
+      </div>
+      <div className="mt-2">
+        <Link to="/search">Search</Link>
+      </div>
+
       <BookShelf
-        category="Currently Reading"
-        books={books}
-        shelf={shelf}
-        onUpdateCategory={updateBookShelf}
+        title="New books"
+        shelf="new"
+        books={shelf.books}
       />
 
       <BookShelf
-        category="Want To Read"
-        books={books}
-        shelf={shelf}
-        onUpdateCategory={updateBookShelf}
+        title="Currently reading books"
+        shelf="currentlyReading"
+        books={shelf.books}
       />
 
       <BookShelf
-        category="Read"
-        books={books}
-        shelf={shelf}
-        onUpdateCategory={updateBookShelf}
+        title="Want to read books"
+        shelf="wantToRead"
+        books={shelf.books}
+      />
+
+      <BookShelf
+        title="Read books"
+        shelf="read"
+        books={shelf.books}
       />
     </div>
   );

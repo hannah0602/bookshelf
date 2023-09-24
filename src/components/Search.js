@@ -21,9 +21,21 @@ const Search = ({ books, onSelect }) => {
   const showingBooks =
     query === ""
       ? books
-      : books.filter((book) =>
-          book.title.toLowerCase().includes(query.toLowerCase()) || book.author.toLowerCase().includes(query.toLowerCase())
-        );
+      : books.filter((book) => {
+        if (book.title.toLowerCase().includes(query.toLowerCase())) {
+          return true;
+        }
+        for (const author of book.authors) {
+          if (author.toLowerCase().includes(query.toLowerCase())) {
+            return true;
+          }
+        }
+        return false;
+      });
+
+  const handleUpdate = (book) => {
+    console.log(book);
+  };
 
   return (
     <div>
@@ -47,9 +59,7 @@ const Search = ({ books, onSelect }) => {
 
       <ol>
         {showingBooks.map((book) => (
-          <li key={book.id}>
-            <Book book={book} onSelect={selectBooks} />
-          </li>
+          <Book key={book.id} book={book} onSelect={selectBooks} onUpdateCategory={handleUpdate} />
         ))}
       </ol>
     </div>
@@ -57,7 +67,3 @@ const Search = ({ books, onSelect }) => {
 };
 
 export default Search;
-
-Search.propTypes = {
-  books: PropTypes.array.isRequired
-};
